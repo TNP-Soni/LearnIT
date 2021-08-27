@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://kit.fontawesome.com/706f195df2.js" crossorigin="anonymous"></script>
-  <script src="./js/bootstrap.min.js"></script>
-  <title>LearnIT</title>
-  <link rel="stylesheet" href="./scripts/scripts.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/706f195df2.js" crossorigin="anonymous"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./scripts/scripts.css"/>
+    <title>LearnIT</title>
 </head>
 <body>
   <!-- -------------------------------NAVBAR------------------------------- -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"  ><span style="color:#127aaa ;">Simpli</span><span style="color: #e7961c;">Blogging</span></a>
+      <a class="navbar-brand" href="#"  ><span style="color:#127aaa;">Simpli</span><span style="color: #e7961c;">Blogging</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,29 +34,40 @@
       </div>
     </div>
   </nav>
-  <!-- -------------------------------NAVBAR------------------------------- -->  
-  <!-- -------------------------------FORM--------------------------------- -->
-  <div class="container1" >
-    <form action="# " method="POST">
   
-      <label for="fname">First Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="First Name">
-  
-      <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lastname" placeholder="Last Name">
-      
-      <label for="country">Contact</label><br><br>
-      <input type="number" id="contact" name="contact" placeholder="Contact Number">
-      <br><br>
-      <label for="subject">Subject</label>
-      <textarea id="subject" name="subject" placeholder="Leave a Comment" style="height:200px"></textarea>
-  
-      <input type="submit" value="Submit" onclick="setContact()">
-  
-    </form>
-  </div>
-<!-- -------------------------------FORM--------------------------------- -->
-<!-- -------------------------------FOOTER------------------------------- -->
+  <!-- -------------------------------NAVBAR------------------------------- -->
+  <h1 style="text-align: center; padding: 20px;">Blog List!!</h1>
+  <div class="container" id="adder">
+  <!-- -------------------------------SCRIPT------------------------------- -->
+  <script>
+    $tobewriten="";
+    $.ajax({
+      method: "GET",
+      url: "https://localhost/Blog/get_data.php",
+       success: function(data){
+       $data1=JSON.parse(data);
+       for(i=0;i<$data1.length;i++){
+        $tobewriten = "<div class=\"row\">\
+          <div class=\"col\" style=\"float:left; width:10%; padding: 10px;\">\
+           <img src=\""+$data1[i].img_url+"\"style=\"width:50%\">\
+          </div>\
+          <div class=\"col\" style=\"float:left; width:90%; margin-left: -300px; padding:10px;\">\
+           <h1>"+$data1[i].title+"</h1>\
+           <h5>"+$data1[i].description+" </h5>\
+           <a class=\"btn btn-outline-success\" href=\"./blogdesc.html\" >Read More</a>\
+          </div>\
+        </div>";
+        document.getElementById("adder").innerHTML+=$tobewriten;
+        }
+      },
+      error: function(){
+      console.log("error");
+     }
+    });
+  </script>
+  <!-- -------------------------------SCRIPT------------------------------- -->
+</div>
+  <!-- -------------------------------FOOTER------------------------------- -->
 <div class="container-fluid pb-0 mb-0 justify-content-center text-light bg-dark" style="align-self: baseline;">
   <footer>
       <div class="row my-5 justify-content-center py-5">
@@ -92,27 +103,11 @@
                       <h6 class="text-muted bold-text"><b>Saurabh Soni</b></h6><small><span><i class="fa fa-envelope" aria-hidden="true"></i></span> saurabh@example.com</small>
                   </div>
               </div>
+            </div>
           </div>
       </div>
   </footer>
 </div>
 <!-- -------------------------------FOOTER------------------------------- -->
-<!-- -------------------------------SCRIPT------------------------------- -->
-<script>
-  function setContact(){
-    alert("Comment recieved!\nWe will reach out shortly!");
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function(){
-      console.log("Asdasd");
-    };
-    xhr.open("open","https://localhost/Blog/put_contact.php");
-    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    $send="fname="+document.getElementById("fname")+"&lname="+document.getElementById("lname")+"&cnum="+document.getElementById("contact")+
-    "&sub="+document.getElementById("subject");
-    console.log();
-    xhr.send($send);
-  }
-</script>
-<!-- -------------------------------SCRIPT------------------------------- -->
 </body>
 </html>
